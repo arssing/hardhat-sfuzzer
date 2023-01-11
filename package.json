@@ -1,0 +1,21 @@
+{
+  "name": "dimploma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit --recursive 'test/**/*.test.ts'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphology": "^0.25.1",
+    "graphology-simple-path": "^0.2.0",
+    "hardhat": "^2.12.5"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@types/shelljs": "^0.8.11"
+  }
+}
