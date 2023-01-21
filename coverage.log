@@ -1,0 +1,32 @@
+{"level":"info","message":"contracts/Donations.sol/Donations:start: 1674303722.375"}
+{"level":"info","message":"1674303730.081:10,34,35,37"}
+{"level":"info","message":"1674303797.532:10,34,35,37,10,23,24,25,26,34,35,37"}
+{"level":"info","message":"contracts/EtherBank.sol/EtherBank:start: 1674303934.781"}
+{"level":"info","message":"contracts/EtherBank.sol/EtherBank:start: 1674304070.417"}
+{"level":"info","message":"1674304077.85:10"}
+{"level":"info","message":"1674304199.153:10,10,14,16,17,18"}
+{"level":"info","message":"contracts/Reentrance.sol/Reentrance:start: 1674304270.463"}
+{"level":"info","message":"contracts/Reentrance.sol/Reentrance:start: 1674304677.909"}
+{"level":"info","message":"1674304685.827:8"}
+{"level":"info","message":"1674304767.516:8,8,16"}
+{"level":"info","message":"1674304771.072:8,8,16,8,16,17,18,19,21"}
+{"level":"info","message":"contracts/reentrancy_cross_func.sol/Reentrancy_cross_function:start: 1674304896.566"}
+{"level":"info","message":"contracts/reentrancy_cross_func.sol/Reentrancy_cross_function:start: 1674305064.816"}
+{"level":"info","message":"1674305072.006:16"}
+{"level":"info","message":"1674305182.071:16,16,23,25,26,27"}
+{"level":"info","message":"contracts/reentrancy_simple.sol/Reentrance:start: 1674305256.299"}
+{"level":"info","message":"contracts/reentrancy_simple.sol/Reentrance:start: 1674305397.87"}
+{"level":"info","message":"1674305405.297:17"}
+{"level":"info","message":"1674305471.047:17,17,24,25,28"}
+{"level":"info","message":"contracts/reentrancyDAO.sol/ReentrancyDAO:start: 1674305595.945"}
+{"level":"info","message":"contracts/reentrancyDAO.sol/ReentrancyDAO:start: 1674305794.676"}
+{"level":"info","message":"1674305801.494:25,26"}
+{"level":"info","message":"1674305863.633:25,26,14,15,16,18,19,20,25,26"}
+{"level":"info","message":"contracts/simpleDAO.sol/SimpleDAO:start: 1674305982.926"}
+{"level":"info","message":"contracts/simpleDAO.sol/SimpleDAO:start: 1674306148.398"}
+{"level":"info","message":"1674306155.354:13,25"}
+{"level":"info","message":"1674306158.321:13,25,13"}
+{"level":"info","message":"1674306161.114:13,25,13,13,17,19,20"}
+{"level":"info","message":"1674306285.166:13,25,13,13,17,19,20,13,17"}
+{"level":"info","message":"contracts/spank_chain.sol/ECTools:start: 1674306326.072"}
+{"level":"info","message":"contracts/spank_chain.sol/ECTools:start: 1674306568.451"}

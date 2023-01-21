@@ -1,0 +1,28 @@
+{
+ "stats": {
+  "suites": 1,
+  "tests": 1,
+  "passes": 1,
+  "pending": 0,
+  "failures": 0
+ },
+ "tests": [
+  {
+   "title": "mark",
+   "fullTitle": "CoverageRunner mark",
+   "file": "src/CoverageRunner.ts",
+   "currentRetry": 0,
+   "err": {}
+  }
+ ],
+ "failures": [],
+ "passes": [
+  {
+   "title": "mark",
+   "fullTitle": "CoverageRunner mark",
+   "file": "src/CoverageRunner.ts",
+   "currentRetry": 0,
+   "err": {}
+  }
+ ]
+}

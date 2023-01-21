@@ -1,24 +1,42 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import fs from 'fs';
 
 class Seed {
-  functions: any;
   path: Array<string>;
-  allowAddresses: Array<string>;
-  ethers: any;
-
+  inputData: any;
   coverage = new Set();
+  payable: Array<string>;
+  nonpayable: Array<string>;
   energy = 0;
 
   constructor(
-    hre: HardhatRuntimeEnvironment, 
-    path: Array<string>, 
-    functions: any, 
-    allowAddresses: Array<string>
+    path: Array<string>,
+    payable: Array<string>,
+    nonpayable:  Array<string>
   ) {
     this.path = path;
-    this.functions = functions;
-    this.allowAddresses = allowAddresses;
-    this.ethers = hre.ethers;
+    this.payable = payable;
+    this.nonpayable = nonpayable;
+  }
+
+  setInputData(inputData: any){
+    this.inputData = inputData;
+  }
+
+  saveAsJson(artifactsJson: string, outputFile: string="./seed.json"){
+    const path = {
+      path: this.path,
+      inputData: this.inputData,
+      pathFile: artifactsJson
+    }
+    const data = JSON.stringify(path);
+    fs.writeFileSync(outputFile, data);
+  }
+  clone(){
+    let seed = new Seed(this.path, this.payable, this.nonpayable);
+    seed.inputData = this.inputData;
+    seed.energy = this.energy;
+    return seed;
   }
 }
 

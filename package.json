@@ -12,7 +12,8 @@
   "dependencies": {
     "graphology": "^0.25.1",
     "graphology-simple-path": "^0.2.0",
-    "hardhat": "^2.12.5"
+    "hardhat": "^2.12.5",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
