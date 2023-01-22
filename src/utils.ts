@@ -7,7 +7,7 @@ function getArtifactsList(artifactsPath: string) {
   return allContracts.filter(notDbgExtension);
 }
 
-function notDbgExtension(pathToFile: string){
+function notDbgExtension(pathToFile: string) {
   return !pathToFile.includes("dbg.json");
 }
 
@@ -17,12 +17,12 @@ function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function getCoverageFromMatrix(){
+function getCoverageFromMatrix() {
   let res: any = {};
   let contracts = JSON.parse(fs.readFileSync("./testMatrix.json", "utf-8"));
-  for (let contract of Object.keys(contracts)){
+  for (let contract of Object.keys(contracts)) {
     let set = new Set();
-    for (let line of Object.keys(contracts[contract])){
+    for (let line of Object.keys(contracts[contract])) {
       if (contracts[contract][line].length > 0) set.add(line)
     }
     res[contract] = Array.from(set);
@@ -32,4 +32,4 @@ function getCoverageFromMatrix(){
 
 
 
-export {getArtifactsList, getCoverageFromMatrix, getRandomInt};
+export { getArtifactsList, getCoverageFromMatrix, getRandomInt };

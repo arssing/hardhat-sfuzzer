@@ -12,18 +12,18 @@ class Seed {
   constructor(
     path: Array<string>,
     payable: Array<string>,
-    nonpayable:  Array<string>
+    nonpayable: Array<string>
   ) {
     this.path = path;
     this.payable = payable;
     this.nonpayable = nonpayable;
   }
 
-  setInputData(inputData: any){
+  setInputData(inputData: any) {
     this.inputData = inputData;
   }
 
-  saveAsJson(artifactsJson: string, outputFile: string="./seed.json"){
+  saveAsJson(artifactsJson: string, outputFile: string = "./seed.json") {
     const path = {
       path: this.path,
       inputData: this.inputData,
@@ -32,7 +32,7 @@ class Seed {
     const data = JSON.stringify(path);
     fs.writeFileSync(outputFile, data);
   }
-  clone(){
+  clone() {
     let seed = new Seed(this.path, this.payable, this.nonpayable);
     seed.inputData = this.inputData;
     seed.energy = this.energy;

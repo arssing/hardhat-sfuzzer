@@ -20,12 +20,12 @@ describe("CoverageRunner", function () {
     let hardhatClient = new HardhatClient(hre);
     await hardhatClient.setupHardhatEVM();
     let oracle = new Oracle(await hardhatClient.getCount());
-  
+
     let seed = JSON.parse(fs.readFileSync("./seed.json", "utf-8"));
-    let path = seed.path;    
+    let path = seed.path;
     let resultPath = [...path];
     const inputData = seed.inputData;
-    
+
     let contractInfo = JSON.parse(fs.readFileSync(seed.pathFile, "utf-8"))
     let contractIface = new hre.ethers.utils.Interface(contractInfo["abi"]);
 
@@ -47,13 +47,13 @@ describe("CoverageRunner", function () {
     let copyPath = [...path];
     selector = contractIface.encodeFunctionData(path[0], inputData[path[0]]);
     await hardhatClient.interactWithValue(
-      acc[0], 
-      contractAddr, 
-      selector, 
+      acc[0],
+      contractAddr,
+      selector,
       etherValue
     )
     copyPath.splice(0, 1);
-    for (let func of copyPath){
+    for (let func of copyPath) {
       selector = contractIface.encodeFunctionData(func, inputData[func]);
       await hardhatClient.interactWithoutValue(acc[0], contractAddr, selector);
       await hardhatClient.increaseTime(604800);
@@ -67,35 +67,35 @@ describe("CoverageRunner", function () {
     let attackerCalldata = hardhatClient.attacker.iface.encodeFunctionData("setData", [contractAddr, bytesToCall]);
     let callWithMsgValue = hardhatClient.attacker.iface.getSighash("callWithMsgValue");
     let callWithoutMsgValue = hardhatClient.attacker.iface.getSighash("callWithoutMsgValue");
-    
+
     //console.log(attackerCalldata)
     //set data to attacker smart contract
     await hardhatClient.interactWithoutValue(
-      acc[0], 
-      hardhatClient.attacker.addr, 
+      acc[0],
+      hardhatClient.attacker.addr,
       attackerCalldata
     )
     await hardhatClient.interactWithValue(
-      acc[0], 
-      hardhatClient.attacker.addr, 
-      callWithMsgValue, 
+      acc[0],
+      hardhatClient.attacker.addr,
+      callWithMsgValue,
       etherValue
     )
     //remove payable func
     path.splice(0, 1);
 
-    for (let func of path){
+    for (let func of path) {
       selector = contractIface.encodeFunctionData(func, inputData[func]);
       attackerCalldata = hardhatClient.attacker.iface.encodeFunctionData("setData", [contractAddr, selector]);
       //set data to attacker smart contract
       await hardhatClient.interactWithoutValue(
-        acc[0], 
-        hardhatClient.attacker.addr, 
+        acc[0],
+        hardhatClient.attacker.addr,
         attackerCalldata
       );
       await hardhatClient.interactWithoutValue(
-        acc[0], 
-        hardhatClient.attacker.addr, 
+        acc[0],
+        hardhatClient.attacker.addr,
         callWithoutMsgValue
       )
       await hardhatClient.increaseTime(604800);
@@ -110,7 +110,7 @@ describe("CoverageRunner", function () {
     let hardhatClient = new HardhatClient(hre);
     await hardhatClient.setupHardhatEVM();
     console.log(await hardhatClient.mintERC20(hardhatClient.attacker?.addr));
-    
+
   }
   it("mark", async function () {
     await start();

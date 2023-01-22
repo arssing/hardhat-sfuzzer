@@ -4,7 +4,7 @@ import fs from 'fs';
 class ASTHelper {
   ast: any;
   pathFile: string;
-  stateMutableOperations = ["=", "+=", "-=", "^=","&=","<<=",">>=","*=","/=","%=","|=","++","--"];
+  stateMutableOperations = ["=", "+=", "-=", "^=", "&=", "<<=", ">>=", "*=", "/=", "%=", "|=", "++", "--"];
 
   constructor(_path: string) {
     this.pathFile = _path;
@@ -35,7 +35,7 @@ class ASTHelper {
     return result;
   }
 
-  getAllPayableFuncs(stateVars: string[]){
+  getAllPayableFuncs(stateVars: string[]) {
     let result: any = {};
     parser.visit(this.ast, {
       FunctionDefinition: function (func) {
@@ -52,7 +52,7 @@ class ASTHelper {
       let arrayType = false;
       let typeName = "";
       let length = -1;
-      
+
       parser.visit(parameter, {
         ArrayTypeName: function (arrType) {
           arrayType = true;
@@ -62,8 +62,8 @@ class ASTHelper {
                 length = Number(NumLit.number);
               }
             })
-            
-          } 
+
+          }
         },
         ElementaryTypeName: function (tn) {
           let name;
@@ -103,7 +103,7 @@ class ASTHelper {
 
     parser.visit(this.ast, {
       FunctionDefinition: function (func) {
-        
+
         if (!(skipUnavailableFunctions && (func.visibility === "private" || func.visibility === "internal"))) {
           let funcParameters: Array<string> = [];
           console.log("parameters")

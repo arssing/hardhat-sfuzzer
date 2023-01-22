@@ -11,11 +11,11 @@ class PowerSchedule {
       return accumulator + current;
     }, 0);
     if (sumEnergy === 0) throw "Sum energy === 0";
-    let normEnergy = energy.map((n) => n/sumEnergy);
+    let normEnergy = energy.map((n) => n / sumEnergy);
     return normEnergy
   }
 
-  choose(population: Array<Seed>): Seed{
+  choose(population: Array<Seed>): Seed {
     this.assignEnergy(population);
     let normEnergy = this.normalizedEnergy(population);
     let seed = weightRandom(population, normEnergy);
@@ -29,12 +29,12 @@ function weightRandom(items: Array<any>, weights: Array<number>) {
   let lastIndex = weights.length - 1;
 
   for (var i = 0; i < lastIndex; ++i) {
-      s += weights[i];
-      if (num < s) {
-          return items[i];
-      }
+    s += weights[i];
+    if (num < s) {
+      return items[i];
+    }
   }
-    return items[lastIndex];
+  return items[lastIndex];
 }
 
-export {PowerSchedule};
+export { PowerSchedule };

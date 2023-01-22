@@ -19,7 +19,7 @@ class ABIParser {
       let contractInfo = JSON.parse(fs.readFileSync(_path, "utf-8"));
       let contractIface = new this.ethers.utils.Interface(contractInfo["abi"]);
       let contractFullName = `${contractInfo["sourceName"]}/${contractInfo["contractName"]}`;
-  
+
       result[contractFullName] = {
         'iface': contractIface,
         'pathFile': _path
@@ -27,7 +27,7 @@ class ABIParser {
       let payable = [];
       let nonpayable = [];
 
-      if (contractIface.deploy.inputs.length !== 0){
+      if (contractIface.deploy.inputs.length !== 0) {
         inputs = [];
         for (let input of contractIface.deploy.inputs) {
           inputs.push(`${this.formatInput(input)}`)
@@ -59,35 +59,35 @@ class ABIParser {
           if (contractIface.functions[func].stateMutability === 'nonpayable') nonpayable.push(functionFullName);
         }
       }
-    
+
       result[contractFullName]["payable"] = payable;
       result[contractFullName]["nonpayable"] = nonpayable;
     }
-    
+
     return result;
   }
-  
-  calculateTypes(arr: any){
-    for (let t of arr){
-      if (Array.isArray(t)){
+
+  calculateTypes(arr: any) {
+    for (let t of arr) {
+      if (Array.isArray(t)) {
         this.calculateTypes(t);
       } else {
-        if (!(t in this.solTypeAmount)){
+        if (!(t in this.solTypeAmount)) {
           this.solTypeAmount[t] = 1;
         } else {
           this.solTypeAmount[t] += 1;
         }
       }
-      
+
     }
   }
   //based on .format() ethers
   formatInput(input: any) {
     let result = "";
     let children = "";
-  
+
     if (input.baseType === "array") {
-  
+
       children += this.formatInput(input.arrayChildren);
       if (input.arrayLength < 0) {
         result += children;

@@ -3,7 +3,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { getRandomInt } from "./utils";
 
 function seedCopy(s1: Seed): Seed {
-  let s = new Seed([], [],[]);
+  let s = new Seed([], [], []);
   s.path = s1.path;
   s.inputData = s1.inputData;
   s.coverage = s1.coverage;
@@ -30,10 +30,10 @@ class Mutator {
   count: number = 0;
 
   constructor(
-    allowAddresses: Array<string>, 
+    allowAddresses: Array<string>,
     hre: HardhatRuntimeEnvironment,
     functionsStructure: any
-    ) {
+  ) {
     this.allowAddresses = allowAddresses;
     this.ethers = hre.ethers;
     this.functionsStructure = functionsStructure;
@@ -56,18 +56,18 @@ class Mutator {
   payableDeleteRandomFuncFromPath(s: Seed): Seed {
     let pos;
     if (s.path.length == 0) return s;
-    if (s.path[0].includes("constructor")){
-      pos =  getRandomInt(1, s.path.length);
+    if (s.path[0].includes("constructor")) {
+      pos = getRandomInt(1, s.path.length);
       if (pos === 1) {
         s.path.splice(1, 1, s.payable[getRandomInt(0, s.payable.length)]);
         return s;
       }
     } else {
-      pos =  getRandomInt(0, s.path.length);
+      pos = getRandomInt(0, s.path.length);
       if (pos === 0) {
         s.path.splice(0, 1, s.payable[getRandomInt(0, s.payable.length)]);
         return s;
-      } 
+      }
     }
     s.path.splice(pos, 1);
     return s;
@@ -77,11 +77,11 @@ class Mutator {
     let pos;
     let func;
 
-    if (s.path[0].includes("constructor")){
-      pos =  getRandomInt(1, s.path.length);
+    if (s.path[0].includes("constructor")) {
+      pos = getRandomInt(1, s.path.length);
       func = ((pos === 1) ? s.payable[getRandomInt(0, s.payable.length)] : s.nonpayable[getRandomInt(0, s.nonpayable.length)]);
     } else {
-      pos =  getRandomInt(0, s.path.length);
+      pos = getRandomInt(0, s.path.length);
       func = ((pos === 0) ? s.payable[getRandomInt(0, s.payable.length)] : s.nonpayable[getRandomInt(0, s.nonpayable.length)]);
     }
     s.path.splice(pos, 0, func);
@@ -92,14 +92,14 @@ class Mutator {
   payableFlipRandomFuncInPath(s: Seed): Seed {
     let pos1;
     let pos2;
-    if (s.path[0].includes("constructor")){
+    if (s.path[0].includes("constructor")) {
       pos1 = getRandomInt(2, s.path.length);
       pos2 = getRandomInt(2, s.path.length);
     } else {
       pos1 = getRandomInt(1, s.path.length);
       pos2 = getRandomInt(1, s.path.length);
     }
-    
+
     if (pos1 === pos2) return s;
     let temp = s.path[pos1];
     s.path[pos1] = s.path[pos2];
@@ -110,7 +110,7 @@ class Mutator {
 
   deleteRandomFuncFromPath(s: Seed): Seed {
     if (s.path.length == 0) return s;
-    const pos =  getRandomInt(0, s.path.length);
+    const pos = getRandomInt(0, s.path.length);
     s.path.splice(pos, 1);
     return s;
   }
@@ -145,7 +145,7 @@ class Mutator {
     return res;
   }
 
-  mutateBytes(solType: string, oldValue: string): string{
+  mutateBytes(solType: string, oldValue: string): string {
     let numBytes: number = +solType.slice(5);
     const pos = getRandomInt(0, numBytes);
     const bits = getRandomInt(0, 256);
@@ -155,7 +155,7 @@ class Mutator {
       tmp[pos] &= bits;
     } else if (mutateType === 1) {
       tmp[pos] ^= bits;
-    } else if (mutateType === 2){
+    } else if (mutateType === 2) {
       tmp[pos] |= bits;
     }
     return this.ethers.utils.hexlify(tmp);
@@ -183,9 +183,9 @@ class Mutator {
   }
 
   mutateData(funcStructure: any, copyData: any, findType: string, pos: number) {
-    funcStructure.forEach((val: any, i: number) =>{
-      if(!Array.isArray(val)){
-        if (val === findType){
+    funcStructure.forEach((val: any, i: number) => {
+      if (!Array.isArray(val)) {
+        if (val === findType) {
           this.count += 1;
           if (this.count === pos) {
             copyData[i] = this.mutateValue(findType, copyData[i]);
@@ -204,19 +204,19 @@ class Mutator {
     if (structure.inputs.length === 0) return s;
     const types = Object.keys(structure.solTypeAmount);
     const typeToMutate = types[Math.floor(Math.random() * types.length)];
-    const pos = getRandomInt(1, structure.solTypeAmount[typeToMutate]+1);
+    const pos = getRandomInt(1, structure.solTypeAmount[typeToMutate] + 1);
     mutator.count = 0;
     mutator.mutateData(structure.inputs, s.inputData[Object.keys(s.inputData)[0]], typeToMutate, pos)
     return s;
   }
-  
+
   payableRandomSeed(s1: Seed): Seed {
     let s = s1.clone();
     let inputData: any = {};
     let constructorName = "";
     let pathLen = 0;
 
-    for (let k of Object.keys(this.functionsStructure)){
+    for (let k of Object.keys(this.functionsStructure)) {
       if (k.includes("constructor")) {
         constructorName = k;
         break;
@@ -224,11 +224,11 @@ class Mutator {
     }
     let keys = JSON.parse(JSON.stringify(s.nonpayable));
     if (s.payable.length === 0 || s.nonpayable.length === 0) throw "Contract must have: 1 payable and 1 nonpayable func";
-    
-    if (constructorName !== ""){
+
+    if (constructorName !== "") {
       pathLen = getRandomInt(2, keys.length + 2);
       s.path = [
-        constructorName, 
+        constructorName,
         s.payable[getRandomInt(0, s.payable.length)]
       ];
     } else {
@@ -309,7 +309,7 @@ class Mutator {
     return randValue;
   }
 
-  getBytes(solType: string){
+  getBytes(solType: string) {
     let numBytes: number = +solType.slice(5);
     return this.ethers.utils.hexValue(this.ethers.utils.randomBytes(numBytes));
   }
@@ -320,44 +320,44 @@ class Mutator {
     return String(getRandomInt(400000, max));
   }
 
-  mutateUint(solType: string, value: string):string {
+  mutateUint(solType: string, value: string): string {
     let power: number = +solType.slice(4);
     let n;
-    if (power > 16){
+    if (power > 16) {
       return "600000";
     } else {
       let t = getRandomInt(0, 2);
-      let rand = getRandomInt(0, 2**power-1);
+      let rand = getRandomInt(0, 2 ** power - 1);
       n = Number(value);
       if (t === 0) {
-        while (n+rand > 2**power-1) rand = getRandomInt(0, 2**power-1);
-        n = n+rand;
+        while (n + rand > 2 ** power - 1) rand = getRandomInt(0, 2 ** power - 1);
+        n = n + rand;
       } else {
-        while (n-rand < 0) rand = getRandomInt(0, 2**power-1);
-        n = n-rand;
+        while (n - rand < 0) rand = getRandomInt(0, 2 ** power - 1);
+        n = n - rand;
       }
     }
-    return String(n);  
+    return String(n);
   }
 
-  mutateInt(solType: string, value: string):string {
+  mutateInt(solType: string, value: string): string {
     let power: number = +solType.slice(3);
     let n;
-    if (power > 16){
+    if (power > 16) {
       return "300000";
     } else {
       let t = getRandomInt(0, 2);
-      let rand = getRandomInt(-(2 ** power) / 2, 2**power/2-1);
+      let rand = getRandomInt(-(2 ** power) / 2, 2 ** power / 2 - 1);
       n = Number(value);
       if (t === 0) {
-        while (n+rand > 2**power/2-1) rand = getRandomInt(0, 2**power-1);
-        n = n+rand;
+        while (n + rand > 2 ** power / 2 - 1) rand = getRandomInt(0, 2 ** power - 1);
+        n = n + rand;
       } else {
-        while (n-rand < -(2 ** power) / 2) rand = getRandomInt(0, 2**power-1);
-        n = n-rand;
+        while (n - rand < -(2 ** power) / 2) rand = getRandomInt(0, 2 ** power - 1);
+        n = n - rand;
       }
     }
-    return String(n);  
+    return String(n);
   }
 
   getInt(solType: string) {

@@ -17,34 +17,34 @@ class Fuzzer {
   population: Array<Seed>;
   seedIndex: number;
   inputs: any = [];
-  current: Seed = new Seed([],[],[]);
+  current: Seed = new Seed([], [], []);
   coverageArray: Array<any> = [];
-  
-  constructor(seeds: Array<Seed>,mutator: Mutator,schedule: PowerSchedule){
+
+  constructor(seeds: Array<Seed>, mutator: Mutator, schedule: PowerSchedule) {
     this.seeds = seeds;
     this.mutator = mutator;
     this.schedule = schedule;
     this.population = [];
     this.seedIndex = 0;
-    this.inputs 
+    this.inputs
   }
   reset() {
     this.population = [];
     this.seedIndex = 0;
   }
-  createCandidate(){
+  createCandidate() {
     let seed = this.schedule.choose(this.population);
     let candidate = seed.clone();
 
     let trials = getRandomInt(1, 5);
-    for (let i=0; i<trials; i++){
+    for (let i = 0; i < trials; i++) {
       candidate = this.mutator.mutate(candidate);
     }
     return candidate;
   }
 
-  fuzz(){
-    if (this.seedIndex < this.seeds.length){
+  fuzz() {
+    if (this.seedIndex < this.seeds.length) {
       this.current = this.seeds[this.seedIndex];
       this.seedIndex += 1;
     } else {
@@ -54,13 +54,13 @@ class Fuzzer {
     return this.current;
   }
 
-  checkCoverage(contractName: string){
+  checkCoverage(contractName: string) {
     let newCov = getCoverageFromMatrix();
     newCov = newCov[Object.keys(newCov)[0]];
     let a = JSON.stringify(newCov);
     let b = JSON.stringify(this.coverageArray);
-    
-    if(b.indexOf(a) === -1){
+
+    if (b.indexOf(a) === -1) {
       this.current.coverage.add(a);
       this.coverageArray.push(newCov);
       this.population.push(this.current);
@@ -69,4 +69,4 @@ class Fuzzer {
   }
 }
 
-export {Fuzzer}
+export { Fuzzer }

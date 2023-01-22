@@ -46,11 +46,11 @@ function getAllPaths(contractPath: string) {
   console.log(res.functions["pay(uint256)"].parameters[0].typeName);
   let result: any = {};
 
-  for (let v of Object.keys(res.stateVariables)){
-    if(res.stateVariables[v].size == 1) {
+  for (let v of Object.keys(res.stateVariables)) {
+    if (res.stateVariables[v].size == 1) {
       for (let item of res.stateVariables[v].values()) result[v] = item;
       continue;
-    } 
+    }
     result[v] = graphSimplePath(res.stateVariables[v]);
   }
 

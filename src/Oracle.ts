@@ -1,6 +1,6 @@
 class Oracle {
   prevValue: string;
-  
+
   constructor(prevValue: string) {
     this.prevValue = prevValue;
   }
